@@ -3,7 +3,6 @@ import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, firstValueFrom } from 'rxjs'
 import { PaginationDto } from 'src/common/dto/pagination.dto'
 import { PRODUCT_SERVICE } from 'src/config/services'
-import { StringDecoder } from 'string_decoder'
 import { UpdateProductDto } from './dto/update-product.dto'
 import { CreateProductDto } from './dto/create-product.dto'
 
