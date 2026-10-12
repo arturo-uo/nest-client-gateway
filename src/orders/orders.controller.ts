@@ -1,4 +1,4 @@
-import { Controller, Query, Get, Post, Body, Param, Inject, ParseUUIDPipe, } from '@nestjs/common'
+import { Controller, Query, Get, Post, Body, Patch, Param, Inject, ParseUUIDPipe, } from '@nestjs/common'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { ORDERS_SERVICE } from 'src/config'
 import { CreateOrderDto, OrderPaginationDto, StatusDto } from './dto'
@@ -39,10 +39,8 @@ export class OrdersController {
   @Get(':status')
   async findAllByStatus(
     @Param() statusDto: StatusDto,
-    @Query() paginationDto: PaginationDto) 
-    {
-    try 
-    {
+    @Query() paginationDto: PaginationDto) {
+    try {
       return this.ordersClient.send('findAllOrders', {
         ...paginationDto,
         status: statusDto.status
@@ -50,6 +48,19 @@ export class OrdersController {
     }
     catch (error: Error | any) {
       throw new RpcException(error.message)
+    }
+  }
+
+  @Patch(':id')
+  changeOrderStatus(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() statusDto: StatusDto) {
+    //return { id, status: statusDto.status }
+    try {
+      return this.ordersClient.send('changeOrderStatus', { id, status: statusDto.status })
+    }
+    catch (error: Error | any) {
+      throw new RpcException(error)
     }
   }
 }
