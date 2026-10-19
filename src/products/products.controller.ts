@@ -10,7 +10,6 @@ import { CreateProductDto } from './dto/create-product.dto'
 export class ProductsController {
   constructor(
     @Inject(NATS_SERVICE) private readonly client: ClientProxy
-
   ) { }
 
   @Post()
